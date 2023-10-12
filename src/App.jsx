@@ -31,27 +31,51 @@ function Logo() {
 }
 
 function Form() {
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
   return (
-    <>
-      <h3 className="add-form">What you want to add 🤔</h3>
-    </>
+    <form className="add-form" onSubmit={handleSubmit}>
+      <h3>What you want to add 🤔</h3>
+      <select>
+        <option value="" disabled selected>
+          Select Hours...
+        </option>
+        {Array.from({ length: 5 }, (_, i) => i + 1).map((num) => (
+          <option value={num} key={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="What to do..."></input>
+      <button>Add</button>
+    </form>
   );
 }
 
 function PackingList() {
   return (
-    <>
-      <ul className="list">
+    <div className="list">
+      <ul>
         {inititalItems.map((i) => (
           <Item item={i} key={i.id} />
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
 function Item({ item }) {
-  return <li>{item.description}</li>;
+  return (
+    <li>
+      <span style={item.done ? { textDecoration: "line-through" } : {}}>
+        {item.hours} {item.description}
+        <button>❌</button>
+      </span>
+
+      <button>&times;</button>
+    </li>
+  );
 }
 
 function Stats() {
