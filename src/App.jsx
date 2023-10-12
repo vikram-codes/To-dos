@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import { useState } from "react";
+import "./App.css";
+
+const inititalItems = [
+  { id: 1, description: "Code", hours: 3, done: false },
+  {
+    id: 2,
+    description: "Gym",
+    hours: 2,
+    done: false,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Logo />
+      <Form />
+      <PackingList />
+      <Stats />
     </>
-  )
+  );
 }
 
-export default App
+function Logo() {
+  return (
+    <>
+      <h1 className="logo">To Do&apos;s List 😡</h1>
+    </>
+  );
+}
+
+function Form() {
+  return (
+    <>
+      <h3 className="add-form">What you want to add 🤔</h3>
+    </>
+  );
+}
+
+function PackingList() {
+  return (
+    <>
+      <ul className="list">
+        {inititalItems.map((i) => (
+          <Item item={i} key={i.id} />
+        ))}
+      </ul>
+    </>
+  );
+}
+
+function Item({ item }) {
+  return <li>{item.description}</li>;
+}
+
+function Stats() {
+  return (
+    <>
+      <footer className="stats">
+        <em>You have completed of your tasks</em>
+      </footer>
+    </>
+  );
+}
+
+export default App;
