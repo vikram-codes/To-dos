@@ -1,4 +1,5 @@
-// import { useState } from "react";
+import { useState } from "react";
+// import { useCallback, useState } from "react";
 import "./App.css";
 
 const inititalItems = [
@@ -9,6 +10,7 @@ const inititalItems = [
     hours: 2,
     done: false,
   },
+  { id: 3, description: "Sleep", hours: 8, done: true },
 ];
 
 function App() {
@@ -34,20 +36,28 @@ function Form() {
   function handleSubmit(e) {
     e.preventDefault();
   }
+  let [hours, setHours] = useState("default");
+  let [desc, setDesc] = useState("");
+
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What you want to add 🤔</h3>
-      <select>
-        <option value="" disabled selected>
-          Select Hours...
+      <select value={hours} onChange={(e) => setHours(Number(e.target.value))}>
+        <option disabled value={"default"}>
+          Select hours...
         </option>
         {Array.from({ length: 5 }, (_, i) => i + 1).map((num) => (
-          <option value={num} key={num}>
+          <option value={num} key={num} placeholder="Select hours...">
             {num}
           </option>
         ))}
       </select>
-      <input type="text" placeholder="What to do..."></input>
+      <input
+        type="text"
+        placeholder="What to do..."
+        value={desc}
+        onChange={(e) => setDesc(e.target.value)}
+      ></input>
       <button>Add</button>
     </form>
   );
@@ -69,7 +79,7 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.done ? { textDecoration: "line-through" } : {}}>
-        {item.hours} {item.description}
+        {item.hours} {"hours"} {item.description}
         <button>❌</button>
       </span>
 
