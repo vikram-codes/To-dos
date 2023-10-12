@@ -3,14 +3,14 @@ import { useState } from "react";
 import "./App.css";
 
 const inititalItems = [
-  { id: 1, description: "Code", hours: 3, done: false },
+  { id: 1, todo: "Code", hours: 3, done: false },
   {
     id: 2,
-    description: "Gym",
+    todo: "Gym",
     hours: 2,
     done: false,
   },
-  { id: 3, description: "Sleep", hours: 8, done: true },
+  { id: 3, todo: "Sleep", hours: 8, done: true },
 ];
 
 function App() {
@@ -33,11 +33,20 @@ function Logo() {
 }
 
 function Form() {
+  let [hours, setHours] = useState("default");
+  let [todo, setTodo] = useState("");
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!todo) return;
+
+    const newItem = { todo, hours, done: false, id: Date.now() };
+    console.log(newItem);
+
+    setHours("default");
+    setTodo("");
   }
-  let [hours, setHours] = useState("default");
-  let [desc, setDesc] = useState("");
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
@@ -55,8 +64,8 @@ function Form() {
       <input
         type="text"
         placeholder="What to do..."
-        value={desc}
-        onChange={(e) => setDesc(e.target.value)}
+        value={todo}
+        onChange={(e) => setTodo(e.target.value)}
       ></input>
       <button>Add</button>
     </form>
@@ -79,7 +88,7 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.done ? { textDecoration: "line-through" } : {}}>
-        {item.hours} {"hours"} {item.description}
+        {item.hours} {"hours"} {item.todo}
         <button>❌</button>
       </span>
 
